@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "cY/+QzfBeys3hWSkHsMyWLnIIf7mHqbNsU2V2VzpyH4=",
+  "Source": "dotnet-course-project-employee-managment-system",
+  "BasePath": "_content/dotnet-course-project-employee-managment-system",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
