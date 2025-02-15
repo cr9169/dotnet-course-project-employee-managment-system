@@ -28,40 +28,52 @@ public class EmployeeController : ControllerBase {
     [HttpGet("{id}")]
     public async Task<ActionResult<Employee>> GetByIdAsync(int id) {
         try {
-            var employee = await _repository.GetByIdAsync(id);
-            return Ok(employee);
-        } catch (Exception err) {
-            return StatusCode(500, $"There was an error: {err}");
-        }
+        var employee = await _repository.GetByIdAsync(id);
+        if (employee == null) 
+            return NotFound($"Employee with ID {id} not found.");
+
+        return Ok(employee);
+    } catch (Exception err) {
+        return StatusCode(500, $"There was an error: {err.Message}");
+    }
     }
 
     [HttpPost]
     public async Task<ActionResult<Employee>> AddEmployeeAsync(Employee employee) {
         try {
             await _repository.AddEmployeeAsync(employee);
-            // Ok returns 200, Created 201 (successfully created).
-            return Created();
+            // Returns 201 Created with the newly created employee in the response body.
+            // Generates a Location header pointing to GetByIdAsync(id), allowing the client to fetch the created resource.
+            return CreatedAtAction(nameof(GetByIdAsync), new {id = employee.Id}, employee);
         } catch (Exception err) {
             return StatusCode(500, $"There was an error: {err}");
         }
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Employee>> DeleteEmployeeAsync(int id) {
+    public async Task<ActionResult> DeleteEmployeeAsync(int id) {
         try {
-            var deletedEmployee = await GetByIdAsync(id);
+            var employee = await _repository.GetByIdAsync(id);
+            if (employee == null)
+                return NotFound($"Employee with ID {id} not found.");
+
             await _repository.DeleteEmployeeAsync(id);
-            return Ok(deletedEmployee);
+            return NoContent();
         } catch (Exception err) {
-            return StatusCode(500, $"There was an error: {err}");
+            return StatusCode(500, $"There was an error: {err.Message}");
         }
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Employee>> UpdateEmployeeAsync(Employee employee) {
+    public async Task<ActionResult<Employee>> UpdateEmployeeAsync(int id, Employee employee) {
         try {
+            if(id != employee.Id) {
+                return BadRequest();
+            }
             await _repository.UpdateEmployeeAsync(employee);
-            return Ok(employee);
+            // Returns 201 Created with the newly created employee in the response body.
+            // Generates a Location header pointing to GetByIdAsync(id), allowing the client to fetch the created resource.
+            return CreatedAtAction(nameof(GetByIdAsync), new {id = employee.Id}, employee);
         } catch (Exception err) {
             return StatusCode(500, $"There was an error: {err}");
         }

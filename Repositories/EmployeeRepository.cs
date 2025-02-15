@@ -23,7 +23,7 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task DeleteEmployeeAsync(int id)
     {
-        var employee = await _context.Employees.FindAsync();
+        var employee = await _context.Employees.FindAsync(id);
         
         if(employee == null) {
             throw new KeyNotFoundException($"Emploee with id {id} could'nt be found.");

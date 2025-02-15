@@ -36,3 +36,4 @@ C:\Users\bargabay12\Desktop\dotnet-course-project-employee-managment-system\dotn
 C:\Users\bargabay12\Desktop\dotnet-course-project-employee-managment-system\dotnet-course-project-employee-managment-system\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\bargabay12\Desktop\dotnet-course-project-employee-managment-system\dotnet-course-project-employee-managment-system\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\bargabay12\Desktop\dotnet-course-project-employee-managment-system\dotnet-course-project-employee-managment-system\obj\Debug\net9.0\dotnet-course-project-employee-managment-system.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\bargabay12\Desktop\dotnet-course-project-employee-managment-system\dotnet-course-project-employee-managment-system\obj\Debug\net9.0\dotnet-course-project-employee-managment-system.sourcelink.json
