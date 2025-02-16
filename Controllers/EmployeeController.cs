@@ -40,11 +40,18 @@ public class EmployeeController : ControllerBase {
 
     [HttpPost]
     public async Task<ActionResult<Employee>> AddEmployeeAsync(Employee employee) {
+
+        // If any of the validations in the Employee model fails, returns 400;
+        if(!ModelState.IsValid) {
+            return BadRequest();
+        }
+
         try {
             await _repository.AddEmployeeAsync(employee);
-            // Returns 201 Created with the newly created employee in the response body.
-            // Generates a Location header pointing to GetByIdAsync(id), allowing the client to fetch the created resource.
-            return CreatedAtAction(nameof(GetByIdAsync), new {id = employee.Id}, employee);
+            // Returns 201 Created status code with:
+            // 1. The newly created employee in the response body.
+            // 2. A Location header with path /api/Employee/{id} for accessing the new resource.
+            return Created($"/api/Employee/{employee.Id}", employee);
         } catch (Exception err) {
             return StatusCode(500, $"There was an error: {err}");
         }
@@ -70,10 +77,17 @@ public class EmployeeController : ControllerBase {
             if(id != employee.Id) {
                 return BadRequest();
             }
+
+            // If any of the validations in the Employee model fails, returns 400;
+            if(!ModelState.IsValid) {
+            return BadRequest();
+            }
+
             await _repository.UpdateEmployeeAsync(employee);
-            // Returns 201 Created with the newly created employee in the response body.
-            // Generates a Location header pointing to GetByIdAsync(id), allowing the client to fetch the created resource.
-            return CreatedAtAction(nameof(GetByIdAsync), new {id = employee.Id}, employee);
+            // Returns 201 Created status code with:
+            // 1. The newly created employee in the response body.
+            // 2. A Location header with path /api/Employee/{id} for accessing the new resource.
+            return Created($"/api/Employee/{employee.Id}", employee);
         } catch (Exception err) {
             return StatusCode(500, $"There was an error: {err}");
         }
